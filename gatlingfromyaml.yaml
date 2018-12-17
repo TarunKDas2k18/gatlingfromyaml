@@ -8,18 +8,18 @@ spec:
   volumes:
     - name: docker-sock
       hostPath:
-        path: /var/run/docker.sock    # A file or directory location on the node that you want to mount into the Pod
-        type: Socket                  # A UNIX socket must exist at the given path
+        path: /home/vagrant/k8s/pods    # A file or directory location on the node that you want to mount into the Pod
+        type: Directory                   # A UNIX socket must exist at the given path
   containers:
     - name: command-demo-container
       image: tarunkumard/fromscratch6:v1.0
       command: ["/bin/sh","-c"]
-      args: ["cd /opt/gatling-fundamentals && chmod 777 gradlew && ./gradlew gatlingRun-simulations.RuntimeParameters -DUSERS=500 -DRAMP_DURATION=5 -DDURATION=30 && chmod 777 /root/.gradle/wrapper/dists/gradle-4.5.1-all/87kuriyahurjjkki3zii366f2/gradle-4.5.1/bin/gradle && cp /opt/gatling-fundamentals/build/reports/gatling/* /opt "]
+      args: ["cd /opt/gatling-fundamentals && chmod 777 gradlew && ./gradlew gatlingRun-simulations.RuntimeParameters -DUSERS=500 -DRAMP_DURATION=5 -DDURATION=30 && chmod 777 /root/.gradle/wrapper/dists/gradle-4.5.1-all/87kuriyahurjjkki3zii366f2/gradle-4.5.1/bin/gradle  "]
+      volumeMounts:
+        - mountPath: /opt/gatling-fundamentals/build/reports/gatling     # The mount path within the container
+          name: docker-sock
 
     - name: ubuntu
       image: ubuntu:16.04                        # Run the ubuntu 16.04
       command: [ "/bin/bash", "-c", "--" ]       # You need to run some task inside a container to keep it running
       args: [ "while true; do sleep 10; done;" ] # Our simple program just sleeps inside an infinite loop
-      volumeMounts:
-        - mountPath: /var/run/docker.sock     # The mount path within the container
-          name: docker-sock
