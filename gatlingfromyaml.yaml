@@ -12,7 +12,7 @@ spec:
         type: Directory                   # A UNIX socket must exist at the given path
   containers:
     - name: command-demo-container
-      image: tarunkumard/fromscratch6:v1.0
+      image: tarunkumard/fromscratch6.0
       command: ["/bin/sh","-c"]
       args: ["cd /opt/gatling-fundamentals && chmod 777 gradlew && ./gradlew gatlingRun-simulations.RuntimeParameters -DUSERS=500 -DRAMP_DURATION=5 -DDURATION=30 && chmod 777 /root/.gradle/wrapper/dists/gradle-4.5.1-all/87kuriyahurjjkki3zii366f2/gradle-4.5.1/bin/gradle  "]
       volumeMounts:
